@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hinata Project</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: url('wlpp.jpg') no-repeat center center/cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .chat-container {
+            width: 350px;
+            height: 500px;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Header Chat */
+        .chat-header {
+            background-color: #222; /* Warna hitam */
+            color: white;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .chat-header img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+            border: 2px solid #4CAF50; /* Border hijau */
+        }
+
+        .chat-header .chat-name {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .chat-box {
+            flex: 1;
+            padding: 10px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            background: url('background.jpg') no-repeat center center/cover;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 10px;
+            border-radius: 15px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            word-wrap: break-word;
+        }
+
+        .bot {
+            background-color: #e0e0e0;
+            align-self: flex-start;
+        }
+
+        .user {
+            background-color: #4CAF50; /* Warna hijau */
+            color: white;
+            align-self: flex-end;
+        }
+
+        .chat-input {
+            display: flex;
+            padding: 10px;
+            background: #fff;
+            border-top: 1px solid #ddd;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .chat-input button {
+            background-color: #4CAF50; /* Warna hijau */
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin-left: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .chat-input button:hover {
+            background-color: #388E3C;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="chat-container">
+        <div class="chat-header">
+            <img src="icon.jpg" alt="Profile">
+            <div class="chat-name">HINATA PROJECT</div>
+        </div>
+        <div id="chat-box" class="chat-box"></div>
+        <div class="chat-input">
+            <input type="text" id="user-input" placeholder="Input Command" onkeypress="checkEnter(event)">
+            <button onclick="sendMessage()">➤</button>
+        </div>
+    </div>
+
+    <script>
+        function sendMessage() {
+            let inputField = document.getElementById("user-input");
+            let message = inputField.value.trim();
+
+            if (message === "") return;
+
+            addMessage("user", message);
+            inputField.value = "";
+
+            let response = getBotResponse(message);
+            setTimeout(() => addMessage("bot", response), 1000);
+        }
+
+        function checkEnter(event) {
+            if (event.key === "Enter") sendMessage();
+        }
+
+        function addMessage(sender, message) {
+            let chatBox = document.getElementById("chat-box");
+            let messageDiv = document.createElement("div");
+            messageDiv.classList.add("message", sender);
+            messageDiv.innerText = message;
+            chatBox.appendChild(messageDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        function getBotResponse(input) {
+            let responses = {
+                "/help": "Halo saya Hinata Project, ketik /menu untuk memulai!",
+                "/menu": "🖥 INFO WEBSITE\n• VERSION : 1.67GEN-BETA\n• INSTAGRAM : @IPSUM\n• TIKTOK : @IPSUM\n\n📕 SEMUA MENU\n/KOLEKSI [ 1 ]\n/ADMIN [ 2 ]\n/MAPEL [3]",
+              
+                "/1": "📕 KOLEKSI SAYA\nINDONESIA 🇲🇨 :\nRUSSIA 🇷🇺 :\nJEPANG 🇯🇵 :\n",
+                
+                "/2": "👤 ADMIN\n\nTELEGRAM : @flixxcom\nIni Suamiku Jangan Di Ambil Ya <3",
+                
+                "/3": "MATA PELAJARAN\n\nSENIN\nGEOGRAFI\nGEOGRAFI\nGEOGRAFI\n\nKIMIA\nKIMIA\nKIMIA\n\nBAHASA INGGRIS\nBAHASA INGGRIS\n",
+                
+                "/4": "Dalam Proses"
+            };
+
+            return responses[input.toLowerCase()] || "Sepertinya Kamu Bukan Userku Pergi Sana!";
+        }
+    </script>
+
+</body>
+</html>
